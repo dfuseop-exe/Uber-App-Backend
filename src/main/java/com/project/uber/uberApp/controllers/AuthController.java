@@ -14,8 +14,8 @@ public class AuthController {
     private final AuthService authService;
 
     @GetMapping("/test")
-    public ResponseEntity<String> authCon(){
-        return ResponseEntity.ok("Working") ;
+    public ResponseEntity<String> authCon() {
+        return ResponseEntity.ok("Working");
     }
 
     @PostMapping("/signup")

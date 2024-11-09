@@ -27,7 +27,7 @@ public class DistanceServiceOSRMImpl implements DistanceService {
                     .get()
                     .uri(uri)
                     .retrieve()
-                    .body(OsrmResponseDTO.class) ;
+                    .body(OsrmResponseDTO.class);
 
             assert osrmResponseDTO != null;
             return osrmResponseDTO.getRoutes().get(0).getDistance() / 1000.0;

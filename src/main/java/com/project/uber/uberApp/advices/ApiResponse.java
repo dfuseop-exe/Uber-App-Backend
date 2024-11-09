@@ -19,12 +19,12 @@ public class ApiResponse<T> {
     }
 
     public ApiResponse(T data) {
-        this() ;
+        this();
         this.data = data;
     }
 
     public ApiResponse(ApiError error) {
-        this() ;
+        this();
         this.error = error;
     }
 }

@@ -6,5 +6,6 @@ import org.springframework.stereotype.Component;
 @Component
 public interface RideFareCalculationStrategy {
     double RIDE_FARE_MULTIPLIER = 10;
-    double calculateFare(RideRequest rideRequest) ;
+
+    double calculateFare(RideRequest rideRequest);
 }

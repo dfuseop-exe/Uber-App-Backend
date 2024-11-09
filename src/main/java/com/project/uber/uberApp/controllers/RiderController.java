@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/rider")
 @RequiredArgsConstructor
 public class RiderController {
-    private final RiderService riderService ;
+    private final RiderService riderService;
 
     @PostMapping("/requestRide")
-    public ResponseEntity<RideRequestDTO> requestRide(@RequestBody RideRequestDTO rideRequestDTO){
-        return ResponseEntity.ok(riderService.requestRide(rideRequestDTO)) ;
+    public ResponseEntity<RideRequestDTO> requestRide(@RequestBody RideRequestDTO rideRequestDTO) {
+        return ResponseEntity.ok(riderService.requestRide(rideRequestDTO));
     }
 }

@@ -32,15 +32,15 @@ public class AuthServiceImpl implements AuthService {
     @Override
     @Transactional
     public UserDTO signUp(SignUpDTO signUpDTO) {
-        Boolean isAlreadyPresent = userRepository.existsUserByEmail(signUpDTO.getEmail()) ;
-        if(isAlreadyPresent) throw new RuntimeConflictException("Email already in use");
+        Boolean isAlreadyPresent = userRepository.existsUserByEmail(signUpDTO.getEmail());
+        if (isAlreadyPresent) throw new RuntimeConflictException("Email already in use");
 
         User user = modelMapper.map(signUpDTO, User.class);
         user.setRoles(Set.of(Role.RIDER));
         User savedUser = userRepository.save(user);
 
         //create user related entities
-        riderService.createNewRider(user) ;
+        riderService.createNewRider(user);
 
         return modelMapper.map(savedUser, UserDTO.class);
     }
@@ -49,4 +49,6 @@ public class AuthServiceImpl implements AuthService {
     public DriverDTO onboardNewDriver(Long userId) {
         return null;
     }
+
+
 }

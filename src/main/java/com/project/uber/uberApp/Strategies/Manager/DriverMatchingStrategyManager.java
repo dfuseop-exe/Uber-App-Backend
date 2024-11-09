@@ -13,9 +13,9 @@ public class DriverMatchingStrategyManager {
     private final DriverMatchingHighestRatedDriverStrategy driverMatchingHighestRatedDriverStrategy;
 
     public DriverMatchingStrategy getDriverMatchingStrategy(double riderRating) {
-        if(riderRating >= 4.5){
-            return driverMatchingHighestRatedDriverStrategy ;
-        }else {
+        if (riderRating >= 4.5) {
+            return driverMatchingHighestRatedDriverStrategy;
+        } else {
             return driverMatchingNearestDriverStrategy;
         }
     }

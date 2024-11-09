@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class RideFareSurgePricingFareCalculationStrategy implements RideFareCalculationStrategy {
-    private final DistanceService distanceService ;
+    private final DistanceService distanceService;
 
     @Override
     public double calculateFare(RideRequest rideRequest) {
-        double distance = distanceService.calculateDistance(rideRequest.getPickUpLocation() , rideRequest.getDropOffLocation()) ;
+        double distance = distanceService.calculateDistance(rideRequest.getPickUpLocation(), rideRequest.getDropOffLocation());
         double SURGE_FACTOR = 2.0;
         return distance * RIDE_FARE_MULTIPLIER * SURGE_FACTOR;
     }

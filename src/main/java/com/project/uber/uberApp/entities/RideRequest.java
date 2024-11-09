@@ -15,27 +15,27 @@ public class RideRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id ;
+    private Long id;
 
-    private Double fare ;
-
-    @Column(columnDefinition = "Geometry(Point , 4326)")
-    private Point pickUpLocation ;
+    private Double fare;
 
     @Column(columnDefinition = "Geometry(Point , 4326)")
-    private Point dropOffLocation ;
+    private Point pickUpLocation;
+
+    @Column(columnDefinition = "Geometry(Point , 4326)")
+    private Point dropOffLocation;
 
     @CreationTimestamp
-    private LocalDateTime requestedTime ;
+    private LocalDateTime requestedTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Rider rider ;
+    private Rider rider;
 
     @Enumerated(EnumType.STRING)
-    private PaymentMethod paymentMethod ;
+    private PaymentMethod paymentMethod;
 
     @Enumerated(EnumType.STRING)
-    private RideRequestStatus rideRequestStatus ;
+    private RideRequestStatus rideRequestStatus;
 
-    private Double distance ;
+    private Double distance;
 }

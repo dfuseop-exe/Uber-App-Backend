@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RideStartDTO {
-    private String otp ;
+    private String otp;
 }

@@ -13,8 +13,8 @@ import java.time.LocalTime;
 @RequiredArgsConstructor
 public class FareStrategyManager {
 
-    private final RideFareDefaultFareCalculationStrategy rideFareDefaultFareCalculationStrategy ;
-    private final RideFareSurgePricingFareCalculationStrategy rideFareSurgePricingFareCalculationStrategy ;
+    private final RideFareDefaultFareCalculationStrategy rideFareDefaultFareCalculationStrategy;
+    private final RideFareSurgePricingFareCalculationStrategy rideFareSurgePricingFareCalculationStrategy;
 
     private boolean isSurgedHours(LocalDateTime currentDateTime) {
         LocalTime currentTime = currentDateTime.toLocalTime();
@@ -24,11 +24,11 @@ public class FareStrategyManager {
         return !currentTime.isBefore(surgeStartTime) && currentTime.isBefore(surgeEndTime);
     }
 
-    public RideFareCalculationStrategy rideFareCalculationStrategy(){
-        if(isSurgedHours(LocalDateTime.now())){
-            return rideFareSurgePricingFareCalculationStrategy ;
-        }else{
-            return rideFareDefaultFareCalculationStrategy ;
+    public RideFareCalculationStrategy rideFareCalculationStrategy() {
+        if (isSurgedHours(LocalDateTime.now())) {
+            return rideFareSurgePricingFareCalculationStrategy;
+        } else {
+            return rideFareDefaultFareCalculationStrategy;
         }
     }
 }

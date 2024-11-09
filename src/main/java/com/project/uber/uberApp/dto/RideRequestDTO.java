@@ -12,13 +12,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RideRequestDTO {
-    private Long id ;
-    private PointDTO pickUpLocation ;
-    private PointDTO dropOffLocation ;
-    private LocalDateTime requestedTime ;
-    private RiderDTO rider ;
-    private Double fare ;
-    private Double distance ;
-    private PaymentMethod paymentMethod ;
-    private RideRequestStatus rideRequestStatus ;
+    private Long id;
+    private PointDTO pickUpLocation;
+    private PointDTO dropOffLocation;
+    private LocalDateTime requestedTime;
+    private RiderDTO rider;
+    private Double fare;
+    private Double distance;
+    private PaymentMethod paymentMethod;
+    private RideRequestStatus rideRequestStatus;
 }

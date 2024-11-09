@@ -11,19 +11,19 @@ import java.time.LocalDateTime;
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id ;
+    private Long id;
 
     @Enumerated(EnumType.STRING)
-    private PaymentMethod paymentMethod ;
+    private PaymentMethod paymentMethod;
 
     @OneToOne(fetch = FetchType.LAZY)
-    private Ride ride ;
+    private Ride ride;
 
-    private Double amount ;
+    private Double amount;
 
     @Enumerated(EnumType.STRING)
-    private PaymentStatus paymentStatus ;
+    private PaymentStatus paymentStatus;
 
     @CreationTimestamp
-    private LocalDateTime paymentTime ;
+    private LocalDateTime paymentTime;
 }

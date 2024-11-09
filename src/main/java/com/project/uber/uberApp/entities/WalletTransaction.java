@@ -11,24 +11,24 @@ import java.time.LocalDateTime;
 public class WalletTransaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id ;
+    private Long id;
 
-    private Double amount ;
-
-    @Enumerated(EnumType.STRING)
-    private TransactionType transactionType ;
+    private Double amount;
 
     @Enumerated(EnumType.STRING)
-    private TransactionMethod transactionMethod ;
+    private TransactionType transactionType;
+
+    @Enumerated(EnumType.STRING)
+    private TransactionMethod transactionMethod;
 
     @OneToOne
-    private Ride ride ;
+    private Ride ride;
 
-    private String transactionId ;
+    private String transactionId;
 
     @CreationTimestamp
-    private LocalDateTime timestamp ;
+    private LocalDateTime timestamp;
 
     @ManyToOne
-    private Wallet wallet ;
+    private Wallet wallet;
 }

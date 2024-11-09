@@ -15,9 +15,9 @@ public class GlobalExceptionHandler {
         ApiError apiError = ApiError.builder()
                 .status(HttpStatus.NOT_FOUND)
                 .error(exception.getMessage())
-                .build() ;
+                .build();
 
-        return buildErrorResponseEntity(apiError) ;
+        return buildErrorResponseEntity(apiError);
     }
 
     @ExceptionHandler(RuntimeConflictException.class)
@@ -25,9 +25,9 @@ public class GlobalExceptionHandler {
         ApiError apiError = ApiError.builder()
                 .status(HttpStatus.CONFLICT)
                 .error(exception.getMessage())
-                .build() ;
+                .build();
 
-        return buildErrorResponseEntity(apiError) ;
+        return buildErrorResponseEntity(apiError);
     }
 
     // Method to build the error response entity

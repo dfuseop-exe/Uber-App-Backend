@@ -23,13 +23,13 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class RideServiceImpl implements RideService {
 
-    private final RideRepository rideRepository ;
-    private final RideRequestService rideRequestService ;
-    private final ModelMapper modelMapper ;
+    private final RideRepository rideRepository;
+    private final RideRequestService rideRequestService;
+    private final ModelMapper modelMapper;
 
     @Override
     public Ride getRideById(Long rideId) {
-        return rideRepository.findById(rideId).orElseThrow(()-> new ResourceNotFoundException("Ride Not Found with this id " + rideId));
+        return rideRepository.findById(rideId).orElseThrow(() -> new ResourceNotFoundException("Ride Not Found with this id " + rideId));
     }
 
     @Override
@@ -47,7 +47,7 @@ public class RideServiceImpl implements RideService {
         ride.setId(null);
 
         //to save status changes
-        rideRequestService.updateRideRequest(rideRequest, RideRequestStatus.CONFIRMED) ;
+        rideRequestService.updateRideRequest(rideRequest, RideRequestStatus.CONFIRMED);
 
         return rideRepository.save(ride);
     }
@@ -59,13 +59,18 @@ public class RideServiceImpl implements RideService {
     }
 
     @Override
+    public Page<RideDTO> getAllRidesOfDriver(Long driverId, PageRequest pageRequest) {
+        return null;
+    }
+
+    @Override
     public Page<RideDTO> getAllRidesOfRider(Long riderId, PageRequest pageRequest) {
         return null;
     }
 
-    private String generateRandomOTP(){
+    private String generateRandomOTP() {
         Random rand = new Random();
-        int otp = rand.nextInt(10000) ;
-        return String.format("%04d",otp);
+        int otp = rand.nextInt(10000);
+        return String.format("%04d", otp);
     }
 }

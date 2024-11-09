@@ -12,6 +12,6 @@ import java.util.Set;
 @NoArgsConstructor
 public class UserDTO {
     private String email;
-    private String name ;
-    private Set<Role> roles ;
+    private String name;
+    private Set<Role> roles;
 }

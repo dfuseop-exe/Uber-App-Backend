@@ -10,15 +10,17 @@ public class Driver {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id ;
-    private Double rating ;
+    private Long id;
+    private Double rating;
+    private Integer ratingCount;
 
     @OneToOne
     @JoinColumn(name = "user_id")
-    private User user ;
+    private User user;
 
-    private Boolean available ;
+    private Boolean available;
+    private String vehicleId ;
 
     @Column(columnDefinition = "Geometry(Point , 4326)")
-    Point currentLocation ;
+    Point currentLocation;
 }
