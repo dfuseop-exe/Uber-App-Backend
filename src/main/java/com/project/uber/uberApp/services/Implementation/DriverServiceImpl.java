@@ -12,10 +12,8 @@ import com.project.uber.uberApp.entities.enums.RideRequestStatus;
 import com.project.uber.uberApp.entities.enums.RideStatus;
 import com.project.uber.uberApp.exceptions.ResourceNotFoundException;
 import com.project.uber.uberApp.repositories.DriverRepository;
-import com.project.uber.uberApp.services.DriverService;
-import com.project.uber.uberApp.services.RideRequestService;
-import com.project.uber.uberApp.services.RideService;
-import com.project.uber.uberApp.services.RiderService;
+import com.project.uber.uberApp.repositories.RiderRepository;
+import com.project.uber.uberApp.services.*;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -35,7 +33,8 @@ public class DriverServiceImpl implements DriverService {
     private final DriverRepository driverRepository;
     private final RideService rideService;
     private final ModelMapper modelMapper;
-    private final RiderService riderService;
+    private final RiderRepository riderRepository;
+    private final PaymentService paymentService;
 
     @Override
     @Transactional
@@ -100,12 +99,34 @@ public class DriverServiceImpl implements DriverService {
         //update ride status as it is started now
         Ride savedRide = rideService.updateRideStatus(ride, RideStatus.ONGOING);
 
+        //create payment object
+        paymentService.createNewPayment(savedRide) ;
+
         return modelMapper.map(savedRide, RideDTO.class);
     }
 
     @Override
     public RideDTO endRide(Long rideId) {
-        return null;
+        Ride ride = rideService.getRideById(rideId);
+        Driver currentDriver = getCurrentDriver();
+
+        if (!currentDriver.equals(ride.getDriver())) {
+            throw new RuntimeException("Forbidden - Different Driver Own this Ride");
+        }
+
+        if (!ride.getRideStatus().equals(RideStatus.ONGOING)) {
+            throw new RuntimeException("Ride status is not Ongoing hence it can be ended " + ride.getRideStatus());
+        }
+
+        ride.setEndedAt(LocalDateTime.now());
+
+        Ride savedRide = rideService.updateRideStatus(ride , RideStatus.ENDED);
+        updateDriverAvailability(currentDriver , true);
+
+        //handle payment -> payment mode -> processed -> transaction created
+        paymentService.processPayment(ride);
+
+        return modelMapper.map(ride, RideDTO.class);
     }
 
     @Override
@@ -121,12 +142,13 @@ public class DriverServiceImpl implements DriverService {
         }
 
         Integer ratingCount = rider.getRatingCount() ;
-        Double updatedRating = (riderRating * ratingCount + rating) / (ratingCount + 1);
+        Double updatedRating = ((riderRating * ratingCount) + rating) / (ratingCount + 1);
 
         rider.setRating(updatedRating);
         rider.setRatingCount(ratingCount+1);
 
-        riderService.updateRider(rider) ;
+        //update rider and using here directly coz of cyclic dependency
+        riderRepository.save(rider);
         return modelMapper.map(rider, RiderDTO.class);
     }
 
@@ -139,7 +161,7 @@ public class DriverServiceImpl implements DriverService {
     @Override
     public Page<RideDTO> getMyAllRides(PageRequest pageRequest) {
         Driver currentDriver = getCurrentDriver() ;
-        return rideService.getAllRidesOfDriver(currentDriver.getId() , pageRequest).map(
+        return rideService.getAllRidesOfDriver(currentDriver , pageRequest).map(
                 ride -> modelMapper.map(ride, RideDTO.class)
         );
     }

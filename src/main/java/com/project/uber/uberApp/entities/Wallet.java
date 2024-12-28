@@ -1,9 +1,11 @@
 package com.project.uber.uberApp.entities;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.List;
 
+@Data
 @Entity
 public class Wallet {
 
@@ -11,7 +13,7 @@ public class Wallet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY , optional = false)
     private User user;
 
     private Double balance;
