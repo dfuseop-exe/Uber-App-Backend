@@ -4,10 +4,7 @@ import com.project.uber.uberApp.dto.DriverDTO;
 import com.project.uber.uberApp.dto.RideDTO;
 import com.project.uber.uberApp.dto.RideStartDTO;
 import com.project.uber.uberApp.dto.RiderDTO;
-import com.project.uber.uberApp.entities.Driver;
-import com.project.uber.uberApp.entities.Ride;
-import com.project.uber.uberApp.entities.RideRequest;
-import com.project.uber.uberApp.entities.Rider;
+import com.project.uber.uberApp.entities.*;
 import com.project.uber.uberApp.entities.enums.RideRequestStatus;
 import com.project.uber.uberApp.entities.enums.RideStatus;
 import com.project.uber.uberApp.exceptions.ResourceNotFoundException;
@@ -18,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -168,7 +166,8 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     public Driver getCurrentDriver() {
-        return driverRepository.findById(2L).orElseThrow(() -> new ResourceNotFoundException("Driver not found"));
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return driverRepository.findByUser(user).orElseThrow(() -> new ResourceNotFoundException("Driver not found with current User info"));
     }
 
     @Override
@@ -182,4 +181,8 @@ public class DriverServiceImpl implements DriverService {
         return driverRepository.save(driver) ;
     }
 
+    @Override
+    public Driver createNewDriver(Driver driver) {
+        return driverRepository.save(driver);
+    }
 }
